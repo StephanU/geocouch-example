@@ -2,19 +2,6 @@ $(function() {
 	var position = [52.520, 13.412],
 		zoom = 12;
 
-	function latLngsToWkt(latLngs) {
-		var wktString = "POLYGON((";
-
-		for (var i = 0; i < latLngs.length; ++i) {
-			wktString += latLngs[i].lat + " " + latLngs[i].lng + ", ";
-		}
-		// last point of polygon needs to equals its first point
-		wktString += latLngs[0].lat + " " + latLngs[0].lng;
-		wktString += "))";
-
-		return wktString;
-	}
-
 	function geocouchSearch(wktString, success, error) {
 		var url = "http://localhost:5984/geocouch-example/_design/geocouch-example/_spatial/points";
 
@@ -26,6 +13,19 @@ $(function() {
 				success(data.rows);
 			}
 		}).error(error);
+	}
+
+	function latLngsToWkt(latLngs) {
+		var wktString = "POLYGON((";
+
+		for (var i = 0; i < latLngs.length; ++i) {
+			wktString += latLngs[i].lat + " " + latLngs[i].lng + ", ";
+		}
+		// last point of polygon needs to equals its first point
+		wktString += latLngs[0].lat + " " + latLngs[0].lng;
+		wktString += "))";
+
+		return wktString;
 	}
 
 	// initialize leaflet map
