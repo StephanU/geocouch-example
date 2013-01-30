@@ -1,10 +1,12 @@
+## Geocouch-Example
 
+![Geocouch Example](https://raw.github.com/StephanU/geocouch-example/master/screenshot.png)
 
 ## Prerequisites
 
-- Couchdb 1.3.x
-- Geocouch
-- erica
+- Couchdb 1.3.x (https://github.com/apache/couchdb/tree/1.3.x)
+- Geocouch (https://github.com/vmx/geocouch/tree/wip-geometry)
+- erica (https://github.com/benoitc/erica)
 
 ## Installation
 
