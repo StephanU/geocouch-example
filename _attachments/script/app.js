@@ -15,6 +15,39 @@ $(function() {
 		}).error(error);
 	}
 
+
+	function latLngArrayToGeoJSON(latLngs) {
+		var geojsonPolygon = {
+			"type": "Feature",
+			"geometry": {
+				"type": "Polygon",
+				"coordinates": []
+			}
+		};
+
+		if (latLngs && latLngs[0]) {
+			var minLng = latLngs[0].lng,
+				maxLng = latLngs[0].lng,
+				minLat = latLngs[0].lat,
+				maxLat = latLngs[0].lat,
+				coordinates = [];
+
+			for (var i = 0; i < latLngs.length; ++i) {
+				var lngLat = latLngs[i],
+					geojsonPosition = [lngLat.lng, lngLat.lat];
+
+				coordinates.push(geojsonPosition);
+
+				minLng = Math.min(minLng, lngLat.lng);
+				maxLng = Math.max(maxLng, lngLat.lng);
+				minLat = Math.min(minLat, lngLat.lat);
+				maxLat = Math.max(maxLat, lngLat.lat);
+			}
+			geojsonPolygon.geometry.coordinates.push(coordinates);
+			geojsonPolygon.bbox = [minLat, minLng, maxLat, maxLng];
+		}
+
+
 	function latLngsToWkt(latLngs) {
 		var wktString = "POLYGON((";
 
@@ -50,6 +83,7 @@ $(function() {
 		var polygon = event.poly,
 			wkt = latLngsToWkt(polygon.getLatLngs());
 
+		console.log(JSON.stringify(latLngArrayToGeoJSON(polygon.getLatLngs())))
 		// draw polygon
 		polygon.addTo(map);
 
